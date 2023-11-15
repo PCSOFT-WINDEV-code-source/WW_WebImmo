@@ -1,0 +1,539 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : COL_WEBIMMO
+ major_version : 28
+ minor_version : 0
+ type : 7
+ description : ""
+ subtype : 0
+procedure_set :
+ identifier : 0x1225d6450014570d
+ internal_properties : CAAAAAgAAABGLu41kG7fjQV3iS4F72qmnKaNh5694reolNKIW0iw
+ code_elements :
+  internal_properties : CAAAAAgAAAD+S4kw23IdufFG3+pkx57TQyvQd9MhWDPW2U6Lpf+E/Px6yZihq/AwmAvGm1Y7QvUgSdcBHwTX0OG2jLDqmkrM7ZOkvgJPl1Y=
+  type_code : 31
+  p_codes :
+   -
+     code : |1-
+      constant
+      	PARAM_TYPE_TRANSACTION = "TRANSAC"
+      	PARAM_LOCALISATION = "LOC"
+      	PARAM_TYPE_BIEN = "BIEN"
+      	PARAM_BUDGET_MAX = "BMAX"
+      	PARAM_BUDGET_MIN = "BMIN"
+      	PARAM_SURFACE_MAX = "SMAX"
+      	PARAM_SURFACE_MIN = "SMIN"
+      	PARAM_NB_PIECES = "NBP"
+      	PARAM_ID_BIEN = "ID"
+      	
+      	TRANSACTION_ACHAT = 1
+      	TRANSACTION_LOCATION = 2
+      	
+      	TYPEBIEN_APPARTEMENT = 1
+      	TYPEBIEN_MAISON = 2
+      	TYPEBIEN_TOUS = 3
+      	
+      	TRI_PRIX_CROISSANT = 1
+      	TRI_PRIX_DECROISSANT = 2
+      	TRI_CODE_POSTAL = 3
+      	TRI_DATE_DECROISSANT = 4
+      	TRI_DATE_CROISSANT = 5
+      
+      	TAILLE_CODE_POSTAL = 5
+      	
+      	IMAGE_NON_DISPO = "img/photo_non_disponible.jpg"
+      	IMAGE_GENERIQUE_MAISON = "images/01-Fotolia_139109124.jpg"
+      	IMAGE_GENERIQUE_APPARTEMENT = "images/03-Fotolia_139107977.jpg"
+      	
+      	VK_DOWN = 40
+      	VK_ESC = 27
+      	VK_DEL = 8
+      	VK_RETURN = 13
+      fin
+      
+      // Critères de recherche
+      STCritere est une structure
+      	nTypeTransaction est un entier
+      	sLocalisation est une chaine
+      	nTypeBien est un entier
+      	nBudgetMin est un entier
+      	nBudgetMax est un entier
+      	nSurfaceMin est un entier
+      	nSurfaceMax est un entier
+      	nNbPiece est un entier
+      	// Recherche avancée
+      	nNbChambre est un entier
+      	nAnneeMin est un entier
+      	nAnneeMax est un entier
+      	nDPEMax est un entier
+      	nGESMax est un entier
+      	dDateMin est une date
+      FIN
+      gstRecherche est un STCritere
+      
+      // Tableau des résultats de la recherche
+      STResultat est une structure
+      	nIDBien est un entier sur 8
+      	sReference est une chaine
+      	sTitreAnnonce est une chaîne
+      	moPrix est un monétaire
+      	sVille est une chaine
+      	sCodePostal est une chaine
+      	sDescription est une chaine
+      	nNbPhoto est un entier
+      	nSurface est un entier
+      	dDateAnnonce est une date
+      	nTypeBien est un entier
+      FIN
+      gtabResultatRecherche est un tableau de STResultat
+      
+      // Tableau des annonces sélectionnées
+      gtabSelection est un tableau de STResultat
+     type : 720896
+  procedures :
+   -
+     name : PartagerParEmail
+     internal_properties : CAAAAAgAAAAc3jkjWyLos/0fxWQgQ2kp2L7zDlrykDXxqAtGoZLnEX32utqtU3mxvfgGfKeIwAJYZz7ba6BfCIeI7nDj6pJ220ZL3o4LGh8EUN5huUE/WDagnN4P0lbZt4ZNIp3HOvcwL2oXQeVFqWdbBBQFI9erZfiVHu1sguRyO0SFrlxdt5Y+gzyiZK3WKZuEb+/d2Ll+0LL+3NZD0Li8ydmarblaYO8YXty28KP5ceCKNnng+eETgsEIaZnjLm9Egooysjdqo+QykwHWjEE7IxyYj363kYayi68=
+     procedure_id : 1308010115086338859
+     type_code : 15
+     code : |1-
+      PROCEDURE PartagerParEmail(local sNomExpediteur est une chaine, local sEmailDestinataire est une chaine, local sMessage est une chaine)
+      
+      // Vérification des paramètres
+      SI sNomExpediteur="" ALORS renvoyer "Merci d'indiquer votre adresse email."
+      SI sEmailDestinataire="" ALORS renvoyer "Merci d'indiquer l'adresse email du destinataire."
+      
+      // Construction du message
+      email.Expéditeur = "info@webimmo"
+      email.NbDestinataire = 1
+      email.Destinataire[1] = sEmailDestinataire
+      email.Sujet = ChaîneConstruit("Une offre immobilière de la part de %1",sNomExpediteur)
+      Email.Message = ChaîneConstruit([
+      	Bonjour,
+      	
+      	%1 pense que cette annonce immobilière est susceptible de vous intéresser :
+      	%2
+      	
+      	%3
+      	
+      	Retrouvez des milliers d'offres immobilières sur le site WebImmo.
+      	
+      	Cordialement,
+      	L'équipe de WebImmo.
+      ],sNomExpediteur,PageAdresse("",paCOMPLETE),sMessage)
+      
+      // Envoi du message
+      si EmailOuvreSessionSMTP("info@webimmo","","localhost") ALORS
+      	EmailEnvoieMessage("info@webimmo")
+      	EmailFermeSession("info@webimmo")	
+      FIN
+      
+      renvoyer ""
+     type : 458752
+   -
+     name : LanceRecherche
+     procedure_id : 1308032504751413466
+     type_code : 15
+     code : |1+
+      // Résumé : Lance une recherche en utilisant les critères dans la structure gstRecherche
+      // Syntaxe :
+      //LanceRecherche ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	Aucune
+      //
+      PROCEDURE LanceRecherche()
+      
+      // Type de transaction
+      si gstRecherche.nTypeTransaction>0 alors
+      	REQ_RechercheMultiCritere.pTypeTransac = gstRecherche.nTypeTransaction
+      sinon
+      	REQ_RechercheMultiCritere.pTypeTransac = null
+      fin
+      
+      // Type de bien
+      si gstRecherche.nTypeBien>0 alors
+      	selon gstRecherche.nTypeBien
+      		cas TYPEBIEN_APPARTEMENT
+      			REQ_RechercheMultiCritere.pListeTypeBien = TYPEBIEN_APPARTEMENT
+      		cas TYPEBIEN_MAISON
+      			REQ_RechercheMultiCritere.pListeTypeBien = TYPEBIEN_MAISON
+      		AUTRE CAS
+      			REQ_RechercheMultiCritere.pListeTypeBien = TYPEBIEN_APPARTEMENT+";"+TYPEBIEN_MAISON
+      	FIN
+      sinon
+      	REQ_RechercheMultiCritere.pListeTypeBien = NULL
+      FIN
+      
+      // Localisation
+      si gstRecherche.sLocalisation="" ALORS
+      	// Pas de localisation
+      	REQ_RechercheMultiCritere.pCodePostal = Null
+      	REQ_RechercheMultiCritere.pCodePostalDebut = Null
+      	REQ_RechercheMultiCritere.pVille = null
+      sinon
+      	si EstNumérique(gstRecherche.sLocalisation) ALORS
+      		si taille(gstRecherche.sLocalisation)<>TAILLE_CODE_POSTAL alors
+      			REQ_RechercheMultiCritere.pCodePostalDebut = val(gstRecherche.sLocalisation)
+      			REQ_RechercheMultiCritere.pCodePostal = null
+      			REQ_RechercheMultiCritere.pVille = Null
+      		sinon
+      			REQ_RechercheMultiCritere.pCodePostal = Val(gstRecherche.sLocalisation)
+      			REQ_RechercheMultiCritere.pCodePostalDebut = Null
+      			REQ_RechercheMultiCritere.pVille = Null
+      		fin
+      	sinon
+      		// Un nom de ville
+      		REQ_RechercheMultiCritere.pCodePostal = Null
+      		REQ_RechercheMultiCritere.pCodePostalDebut = Null
+      		REQ_RechercheMultiCritere.pVille = gstRecherche.sLocalisation
+      	FIN
+      FIN
+      
+      // Budget
+      si gstRecherche.nBudgetMin>0 alors
+      	REQ_RechercheMultiCritere.pBudgetMin = gstRecherche.nBudgetMin
+      sinon
+      	REQ_RechercheMultiCritere.pBudgetMin = null
+      FIN
+      si gstRecherche.nBudgetMax>0 alors
+      	REQ_RechercheMultiCritere.pBudgetMax = gstRecherche.nBudgetMax
+      sinon
+      	REQ_RechercheMultiCritere.pBudgetMax = null
+      FIN
+      
+      // Surface
+      si gstRecherche.nSurfaceMin>0 ALORS
+      	REQ_RechercheMultiCritere.pSurfaceMin = gstRecherche.nSurfaceMin
+      sinon
+      	REQ_RechercheMultiCritere.pSurfaceMin = null
+      FIN
+      si gstRecherche.nSurfaceMax>0 ALORS
+      	REQ_RechercheMultiCritere.pSurfaceMax = gstRecherche.nSurfaceMax
+      sinon
+      	REQ_RechercheMultiCritere.pSurfaceMax = null
+      FIN
+      
+      // Nombre de pièces
+      si gstRecherche.nNbPiece>0 ALORS
+      	REQ_RechercheMultiCritere.pNbPieceMin = gstRecherche.nNbPiece
+      sinon
+      	REQ_RechercheMultiCritere.pNbPieceMin = null
+      FIN
+      
+      // Nombre de chambres
+      si gstRecherche.nNbChambre>0 alors
+      	REQ_RechercheMultiCritere.pNbChambreMin = gstRecherche.nNbChambre
+      sinon
+      	REQ_RechercheMultiCritere.pNbChambreMin = null
+      FIN
+      
+      // Année de construction
+      si gstRecherche.nAnneeMin>0 alors
+      	REQ_RechercheMultiCritere.pAnneeMin = gstRecherche.nAnneeMin
+      sinon
+      	REQ_RechercheMultiCritere.pAnneeMin = null
+      FIN
+      si gstRecherche.nAnneeMax>0 alors
+      	REQ_RechercheMultiCritere.pAnneeMax = gstRecherche.nAnneeMax
+      sinon	
+      	REQ_RechercheMultiCritere.pAnneeMax = null
+      FIN
+      
+      // DPE/GES
+      si gstRecherche.nDPEMax>0 alors
+      	REQ_RechercheMultiCritere.pDPEMax = gstRecherche.nDPEMax
+      sinon
+      	REQ_RechercheMultiCritere.pDPEMax = null
+      FIN
+      si gstRecherche.nGESMax>0 alors
+      	REQ_RechercheMultiCritere.pGESMax = gstRecherche.nGESMax
+      sinon
+      	REQ_RechercheMultiCritere.pGESMax = null
+      FIN
+      
+      // Date minimale de l'annonce
+      si gstRecherche.dDateMin<>"" ALORS
+      	REQ_RechercheMultiCritere.pDateMin = gstRecherche.dDateMin
+      sinon
+      	REQ_RechercheMultiCritere.pDateMin = null
+      FIN
+      
+      // Tri
+      REQ_RechercheMultiCritere.pTri = "Prix"
+      
+      // Vide les résultats de la recherche précédente
+      SupprimeTout(gtabResultatRecherche)
+      
+      // Exécution de la requête
+      si HExécuteRequête(REQ_RechercheMultiCritere,hRequêteDéfaut) ALORS
+      	// Remplissage du tableau des résultats
+      	HLitPremier(REQ_RechercheMultiCritere)
+      	tantque pas HEnDehors(REQ_RechercheMultiCritere)
+      		stRes est un STResultat
+      		stRes.nIDBien = REQ_RechercheMultiCritere.IDBienImmo
+      		stRes.sTitreAnnonce = REQ_RechercheMultiCritere.TitreAnnonce
+      		stRes.moPrix = REQ_RechercheMultiCritere.Prix
+      		stRes.sVille = REQ_RechercheMultiCritere.Ville
+      		stRes.sCodePostal = REQ_RechercheMultiCritere.CodePostal
+      		stRes.sDescription = REQ_RechercheMultiCritere.Description
+      		stRes.nNbPhoto = REQ_RechercheMultiCritere.NnPhoto
+      		stRes.nSurface = REQ_RechercheMultiCritere.Surface
+      		stRes.sReference = REQ_RechercheMultiCritere.Reference
+      		stRes.dDateAnnonce = REQ_RechercheMultiCritere.DateAnnonce
+      		stRes.nTypeBien = REQ_RechercheMultiCritere.Type
+      		ajoute(gtabResultatRecherche,stRes)
+      		HLitSuivant(REQ_RechercheMultiCritere)
+      	FIN
+      FIN
+      
+      
+     type : 458752
+   -
+     name : InitialisationWebImmo
+     procedure_id : 1308089554805131296
+     type_code : 15
+     code : |1+
+      // Résumé : <indiquez ici ce que fait la procédure>
+      // Syntaxe :
+      //InitialisationWebImmo ()
+      //
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	Aucune
+      //
+      // Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      PROCEDURE InitialisationWebImmo()
+      
+      gstRecherche.dDateMin = ""
+      
+      DéclareContexteAWP(gstRecherche)
+      DéclareContexteAWP(gtabResultatRecherche)
+      DéclareContexteAWP(gtabSelection)
+      
+      EmailChangeTimeOut(5)
+     type : 458752
+   -
+     name : AjouteBienDansSelection
+     procedure_id : 1308430759903248285
+     type_code : 15
+     code : |1+
+      PROCEDURE AjouteBienDansSelection( local nRangBienDansResultat est un entier )
+      
+      SI Cherche(gtabSelection,tcLinéaire,"nIDBien",gtabResultatRecherche[nRangBienDansResultat].nIDBien)=-1 ALORS
+      	Ajoute(gtabSelection,gtabResultatRecherche[nRangBienDansResultat])
+      FIN
+     type : 458752
+   -
+     name : EnvoyerSelectionParEmail
+     internal_properties : CAAAAAgAAADn4NMU/BG0LXY5b8Jw7EJgdULRbaDN0lulMO5560UCmXlDK7Dolhw/S9Ei1eZrKkPtJAExx1LGrAroNo9qgZDbnbfuCR8YmIYJOjEtECNpC7EVfEqcvidIdwsstG+X5vDFbhlnradu1++7W041XvsGvMtPBvuNYTxt00t1fCcpXO2feyLiF2rSbAMzh4/ITqxhKuzezOnwftsYRG8evBF/GzJ6wzBJgWggVxMBvSQYbH3HN2n2wS2AZznvs2YY/RvsdA==
+     procedure_id : 1308442708526609098
+     type_code : 15
+     code : |1+
+      // Résumé : <indiquez ici ce que fait la procédure>
+      // Syntaxe :
+      //EnvoyerSelectionParEmail (<sAdresseDestinataire> est chaîne)
+      //
+      // Paramètres :
+      //	sAdresseDestinataire (chaîne ANSI) : <indiquez ici le rôle de sAdresseDestinataire>
+      // Valeur de retour :
+      // 	Aucune
+      //
+      // Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      PROCEDURE EnvoyerSelectionParEmail( local sAdresseDestinataire est une chaine )
+      
+      email.Sujet = "Votre sélection d'annonces immobilières"
+      email.Expéditeur = "info@webimmo"
+      email.NbDestinataire = 1
+      email.Destinataire = sAdresseDestinataire
+      email.Message = [
+      Bonjour,
+      
+      Voici la liste des annonces immobilières que vous avez sélectionné sur le site WebImmo :
+      ]
+      POUR TOUT stAnnonce DE gtabSelection
+      	email.Message += ChaîneConstruit("%1 (Référence : %2)",stAnnonce.sTitreAnnonce,stAnnonce.nIDBien)+rc
+      FIN
+      email.Message += [
+      
+      Cordialement,
+      L'équipe de WebImmo.
+      ]
+      
+      si EmailOuvreSessionSMTP("info@webimmo","","localhost") alors
+      	EmailEnvoieMessage("info@webimmo")
+      	EmailFermeSession("info@webimmo")
+      fin
+     type : 458752
+   -
+     name : TrierResultats
+     procedure_id : 1308452926271783068
+     type_code : 15
+     code : |1+
+      // Résumé : <indiquez ici ce que fait la procédure>
+      // Syntaxe :
+      //TrierResultats (<nCritere> est entier)
+      //
+      // Paramètres :
+      //	nCritere (entier) : <indiquez ici le rôle de nCritere>
+      // Valeur de retour :
+      // 	Aucune
+      //
+      // Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      PROCEDURE TrierResultats( local nCritere est un entier )
+      
+      selon nCritere
+      	cas TRI_PRIX_CROISSANT
+      		trie(gtabResultatRecherche,ttmembre,"+moPrix")
+      	CAS TRI_PRIX_DECROISSANT
+      		trie(gtabResultatRecherche,ttMembre,"-moPrix")
+      	CAS TRI_CODE_POSTAL
+      		trie(gtabResultatRecherche,ttMembre,"+sCodePostal")
+      	CAS TRI_DATE_DECROISSANT
+      		Trie(gtabResultatRecherche,ttMembre,"+dDateAnnonce")
+      	CAS TRI_DATE_CROISSANT
+      		Trie(gtabResultatRecherche,ttMembre,"-dDateAnnonce")
+      fin
+     type : 458752
+   -
+     name : FichierPhoto
+     internal_properties : CAAAAAgAAAB0z7CG7eD8kSqKBxWqFkti95S0zOqzxV6QGnT1FfzKq0aTEcShMlAdgNha+C629c4sHBy1Fq5V8/gUje6ERAy9NwgaIgyqz8qm3srY2kuk12RZNx8rDPGOGrdyrAHCXAER0GctEsdTDB7ZFBNyjr/ie8ndlI67XgXOyypkg489MGyWwGQNzBNuakfpz2IKM0+BPtmUjwQ=
+     procedure_id : 1308473022457144961
+     type_code : 15
+     code : |1+
+      // Résumé : <indiquez ici ce que fait la procédure>
+      // Syntaxe :
+      //[ <Résultat> = ] FichierPhoto (<nIDBien> est entier, <nRangPhoto> est entier, <nTypeBien> est entier)
+      //
+      // Paramètres :
+      //	nIDBien (entier) : <indiquez ici le rôle de nIDBien>
+      //	nRangPhoto (entier) : <indiquez ici le rôle de nRangPhoto>
+      //	nTypeBien (entier) : <indiquez ici le rôle de nTypeBien>
+      // Valeur de retour :
+      // 	chaîne ANSI : // 	Aucune
+      //
+      // Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      PROCEDURE FichierPhoto( local nIDBien est un entier , local nRangPhoto est un entier, local nTypeBien est un entier )
+      
+      // Calcul du chemin "normal"
+      sChemin est une chaine = ChaîneConstruit("photo_bien_%1_%2.jpg",nIDBien,nRangPhoto)
+      si fFichierExiste(ComplèteRep(fRepWeb())+sChemin) ALORS
+      	renvoyer sChemin
+      FIN
+      
+      selon nTypeBien
+      	cas TYPEBIEN_APPARTEMENT
+      		RENVOYER "/"+RépertoireWeb()+"/"+IMAGE_GENERIQUE_APPARTEMENT
+      	cas TYPEBIEN_MAISON
+      		RENVOYER "/"+RépertoireWeb()+"/"+IMAGE_GENERIQUE_MAISON
+      FIN
+      
+      // Si le fichier n'existe pas, on renvoie une image de remplacement
+      renvoyer "/"+RépertoireWeb()+"/"+IMAGE_NON_DISPO
+     type : 458752
+   -
+     name : ListeVilleCommencePar
+     internal_properties : CAAAAAgAAACs91BklxzGtVrzkSAlcI9q2uzpneX2uXWFg96myBJlYZm39XAe9pIB4s3Z7MhLaGu8/RG753EzvzNbWIWW/vyvFqCmRjlmI/X+nZO+jBjTYHMIUGMKlHhBzvA2I+ORY4ERHGAsiRFjO0sD1RRnC8yZnQhMmcY69K2Yqk4yhxXFO7a8
+     procedure_id : 1308760729355849141
+     type_code : 15
+     code : |1-
+      // Résumé : <indiquez ici ce que fait la procédure>
+      // Syntaxe :
+      //[ <Résultat> = ] ListeVilleCommencePar (<sLocalisation> est chaîne)
+      //
+      // Paramètres :
+      //	sLocalisation (chaîne ANSI) : <indiquez ici le rôle de sLocalisation>
+      // Valeur de retour :
+      // 	chaîne ANSI : // 	Aucune
+      //
+      // Exemple :
+      // Indiquez ici un exemple d'utilisation.
+      //
+      PROCEDURE ListeVilleCommencePar( local sLocalisation est une chaine )
+      
+      sListeLoc est une chaine
+      
+      si HExécuteRequête(REQ_CommuneCommencePar,hRequêteDéfaut,sLocalisation) alors
+      	pour TOUT REQ_CommuneCommencePar 
+      		sListeLoc += [rc] + ChaîneConstruit("%1 (%2)",REQ_CommuneCommencePar.Ville,REQ_CommuneCommencePar.CodePostal)
+      	FIN
+      FIN
+      
+      renvoyer sListeLoc
+     type : 458752
+   -
+     name : AjouteBienDansSelectionParID
+     procedure_id : 1346335967989102781
+     type_code : 15
+     code : |1+
+      PROCEDURE AjouteBienDansSelectionParID( local nIDBien est un entier )
+      
+      Si Cherche(gtabSelection,tcLinéaire,"nIDBien",nIDBien)=-1 alors
+      	si HLitRecherchePremier(BienImmobilier,IDBienImmo,nIDBien) ALORS
+      		stRes est un STResultat
+      		stRes.nIDBien = BienImmobilier.IDBienImmo
+      		stRes.sTitreAnnonce = BienImmobilier.TitreAnnonce
+      		stRes.moPrix = BienImmobilier.Prix
+      		stRes.sVille = BienImmobilier.Ville
+      		stRes.sCodePostal = BienImmobilier.CodePostal
+      		stRes.sDescription = BienImmobilier.Description
+      		stRes.nNbPhoto = BienImmobilier.NnPhoto
+      		stRes.nSurface = BienImmobilier.Surface
+      		stRes.sReference = BienImmobilier.Reference
+      		stRes.dDateAnnonce = BienImmobilier.DateAnnonce
+      		stRes.nTypeBien = BienImmobilier.Type
+      		
+      		Ajoute(gtabSelection,stRes)
+      	FIN
+      fin
+     type : 458752
+   -
+     name : __TestConnexionBDD
+     procedure_id : 1393359056671572166
+     type_code : 15
+     code : |1+
+      PROCEDURE PRIVÉE __TestConnexionBDD()
+      
+      // Paramètres de la connexion
+      CxBDD est une Connexion
+      CxBDD..Provider = hAccèsHF7
+      
+      // Ouverture de la connexion
+      TestVérifie(HOuvreConnexion(CxBDD),"échec","réussite","Test de connexion à la base de données : ")
+      
+      // Vérifie l'existence des fichiers
+      sListeFichier est une chaine = HListeFichier()
+      POUR TOUTE CHAÎNE sFichier DE sListeFichier SEPAREE PAR RC
+      	TestVérifie(HFichierExiste(sFichier),"échec","réussite",ChaîneConstruit("Test de l’existence du fichier %1 : ",sFichier))
+      FIN
+      
+      // Exécute une requête du projet
+      TestVérifie(HExécuteRequête(REQ_CommuneCommencePar,hRequêteDéfaut,"A"),ChaîneConstruit("échec (%1)",HErreurInfo()),"réussite","Exécution d'une requête : ")
+      
+      
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : COL_SansNom1
+resources :
+ string_res :
+  identifier : 0x1fca39110e4f2459
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ
+associated_test :
+ name : TEST_COL_WEBIMMO.wxt

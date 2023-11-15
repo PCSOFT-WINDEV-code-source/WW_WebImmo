@@ -1,0 +1,303 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : WW_WebImmo
+ major_version : 28
+ minor_version : 0
+ type : 4097
+ description : ""
+ subtype : 0
+project :
+ identifier : 0x0
+ internal_properties : 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
+ configurations :
+  -
+    name : WW_WebImmo
+    internal_properties : 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
+    configuration_id : 6553022692058948823
+    type : 2
+    generation_name : .\WW_WebImmo.wdl
+    version :
+     version : 1.00Ag
+     internal_generation_version : 7
+    index_page_generation_name : accueil
+    language : 1
+    64bits : true
+ elements :
+  identifier : 0x4aaf502900291c61
+  elements :
+   -
+     name : COL_WEBIMMO
+     identifier : 0x4225d64602675d25
+     internal_properties : CAAAAAgAAADNSSV5RjN7pInVpdiW3+6M7/7WDsYVIt2o0V7bExz2OppanjzjHVJS2kawCIh4APDYWA==
+     physical_name : .\COL_WEBIMMO.wdg
+     type : 7
+   -
+     name : fiche
+     identifier : 0x49c389d801ecd9b5
+     internal_properties : CAAAAAgAAAAC3Ynci++JLnSgdYKuup7hwFszXKVIAUH5IySvoCHP2mXOBC/a8Mjy4MYDDrK9rUZ8/MqEjgG+NzgGLK0dIsV+JK5grkA=
+     physical_name : .\fiche.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : liste
+     identifier : 0x49c38a8601ef826e
+     internal_properties : CAAAAAgAAACISwOqeb0n/HqeQ9z8RARPLpH1svuuYOioVHmk4Uf4OecsfSPLp++urKID7HJbDyRa0hDOMKdYUQZU+p8PUBfMkhzWOMo=
+     physical_name : .\liste.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : REQ_RechercheMultiCritere
+     identifier : 0x422712510025ecc0
+     internal_properties : CAAAAAgAAAAgHhgEo5iQS2J6Ss2bufErvsFtzYxd8ZGykqW1YCJqjrJYpiQOKmVnL+vVI+Md5dslLQ==
+     physical_name : .\REQ_RechercheMultiCritere.WDR
+     type : 5
+   -
+     name : REQ_CommuneCommencePar
+     identifier : 0x4229a7f8002689a0
+     internal_properties : CAAAAAgAAADYtoCcK1DYg1piQsXjgomzspfh8UI1/j2KdHssYw+FS7F9vR0GMm1vJxONayulXVO9RQ==
+     physical_name : .\REQ_CommuneCommencePar.WDR
+     type : 5
+   -
+     name : TEST_COL_WEBIMMO
+     identifier : 0x435635f8003087e2
+     internal_properties : CAAAAAgAAADcujRgXwQsP4twj2qL5sDNkK3P51302+GogfNG4l23aZ+zM8R/eZ/22E9Jt39xCf/JSQ==
+     physical_name : .\TEST_COL_WEBIMMO.wxt
+     type : 17
+   -
+     name : PAGEMOD_Principal
+     identifier : 0x49c0c1f000c6f0dd
+     internal_properties : CAAAAAgAAACEguzI96wEJzEKK7Ir/DVUCmvBWYNC1wiQf7NObtG7Hf/n9opPqSe6ZscxjxfJsSeRkQ==
+     physical_name : .\PAGEMOD_Principal.wwt
+     type : 65541
+   -
+     name : accueil
+     identifier : 0x49c115b000a31806
+     internal_properties : CAAAAAgAAABDBCBHHGbwOwHduNfj/1cqOaIKJw7HKr6fx9+03944rHfsxqQyG7VZESf0863yNs3lZaO7RUoF/P1b8eBIF84FrTf5Bf8=
+     physical_name : .\accueil.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : recherche
+     identifier : 0x49c3892401ea1aa4
+     internal_properties : CAAAAAgAAAA6xWEEUyexZvwY/Womgsa5qBN7NH0QDc8HHTuqm35QB9LOXVd2HkYCyH6jjgadhZ7UVJJMttmWD8CetCWV2o1GbHa4xjg=
+     physical_name : .\recherche.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+   -
+     name : contact
+     identifier : 0x49c36c9100aa7c0e
+     internal_properties : CAAAAAgAAACVVna5dkgqDUtPEm1N1anc2wRQ+bjR1BL17elaw12FQvyGNaE4XRRd141yfTdkRN+Xl21hozTr4pelS07+QSTfhwnLM80=
+     physical_name : .\contact.wwh
+     type : 65538
+     report :
+      fr-FR : FR
+  other_elements : []
+  analysis : .\WEBIMMO.ana\WebImmo.wda
+  net_assemblies : []
+  uwp_api : []
+  external_components : []
+  internal_components : []
+ common_generation_directory : true
+ wb_skin : 190 Evolution
+ wb_color_palette : GreenVolution
+ site_type : 3
+ languages :
+  - fr-FR
+ wd_style_sheet : .\WEBIMMO.sty
+ site_map :
+  roots : []
+  orphans :
+   -
+     name : accueil
+     parameters : []
+     title :
+      fr-FR : WW_WebImmo - Accueil
+     description :
+      fr-FR : WW_WebImmo - Accueil
+   -
+     name : contact
+     parameters : []
+     title :
+      fr-FR : Contact_new
+     description :
+      fr-FR : Contact_new
+   -
+     name : contact
+     parameters : []
+     title :
+      fr-FR : WebImmo
+     description :
+      fr-FR : WebImmo
+   -
+     name : fiche
+     parameters : []
+     title :
+      fr-FR : Fiche d'un bien
+     description :
+      fr-FR : Fiche d'un bien
+   -
+     name : fiche
+     parameters : []
+     title :
+      fr-FR : WebImmo
+     description :
+      fr-FR : WebImmo
+   -
+     name : liste
+     parameters : []
+     title :
+      fr-FR : Liste des biens
+     description :
+      fr-FR : Liste des biens
+   -
+     name : liste
+     parameters : []
+     title :
+      fr-FR : WebImmo - Liste de biens
+     description :
+      fr-FR : WebImmo - Liste de biens
+   -
+     name : recherche
+     parameters : []
+     title :
+      fr-FR : Recherche
+     description :
+      fr-FR : Recherche
+   -
+     name : recherche
+     parameters : []
+     title :
+      fr-FR : WebImmo - Recherche avancée
+     description :
+      fr-FR : WebImmo - Recherche avancée
+ url_rewriting :
+  internal_properties : CAAAAAgAAADkPzcUdUUS7wCiun+MCjqYH70RJdzkSv/nRvXZ3ENdikMa6bcHtsAH
+ code_elements :
+  internal_properties : CAAAAAgAAABseimUYz4VdXZ8hGsGFqoxLDfDcHkNZdBf0iQg2FQcqmw5VrO2lryVMt3efm9RagPlXJBReauIsX3ZdB8=
+  type_code : 0
+  p_codes :
+   -
+     code : |1-
+      
+      ConfigureContexteAWP(ctxDisque,ctxIDCookieURL)
+      InitialisationWebImmo()
+     type : 196608
+   -
+     type : 196621
+   -
+     type : 196627
+     enabled : false
+  orphans :
+   -
+     name : WW_WebImmo
+     identifier : 0x4aaf502a003b1cbf
+     code_elements :
+      type_code : 159
+      p_codes : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+  original_name : WEBIMMO
+rad :
+ internal_properties : CAAAAAgAAABhIL0UXeZmxDJxY3Xy0Q==
+project_explorer :
+ explorer_type : project
+resources :
+ string_res :
+  identifier : 0x0
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+  strings :
+   -
+     text :
+      fr-FR : AucuneLimiteSuperficie
+     index : 0
+   -
+     text :
+      fr-FR : AucunPrixMinimum
+     index : 1
+   -
+     text :
+      fr-FR : AucunPrixMaximum
+     index : 2
+   -
+     text :
+      fr-FR : ToutesLesCategories
+     index : 3
+   -
+     text :
+      fr-FR : TousLesDepartements
+     index : 4
+   -
+     text :
+      fr-FR : ToutesLesVilles
+     index : 5
+   -
+     text :
+      fr-FR : Acheter
+     index : 6
+   -
+     text :
+      fr-FR : Louer
+     index : 7
+   -
+     text :
+      fr-FR : Maison
+     index : 8
+   -
+     text :
+      fr-FR : Appartement
+     index : 9
+   -
+     text :
+      fr-FR : AucuneLimiteSuperficie
+     index : 10
+   -
+     text :
+      fr-FR : AucunPrixMinimum
+     index : 11
+   -
+     text :
+      fr-FR : AucunPrixMaximum
+     index : 12
+   -
+     text :
+      fr-FR : ToutesLesCategories
+     index : 13
+   -
+     text :
+      fr-FR : TousLesDepartements
+     index : 14
+   -
+     text :
+      fr-FR : ToutesLesVilles
+     index : 15
+   -
+     text :
+      fr-FR : Acheter
+     index : 16
+   -
+     text :
+      fr-FR : Louer
+     index : 17
+   -
+     text :
+      fr-FR : Maison
+     index : 18
+   -
+     text :
+      fr-FR : Appartement
+     index : 19
+   -
+     text :
+      fr-FR : Maison
+     index : 20
+   -
+     text :
+      fr-FR : Maison
+     index : 21
+custom_note :
+ internal_properties : CAAAAAgAAAAd98VSJfHHqE3P0QHwrwdhn7ig8dWBR6valpUTgnAMTVXiDg==
